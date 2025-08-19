@@ -53,14 +53,24 @@ body{
 .title{ margin: 0; font-size: 20px; font-weight: 700; letter-spacing: .2px; }
 
 .hud{ display: flex; align-items: center; gap: 12px; }
+/* HUD badges – chỉ text */
 .badge{
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 6px 10px; min-height: 32px;
-  background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;                /* nhỏ hơn khi không có icon */
+  padding: 6px 10px;
+  min-height: 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
   font-size: 14px;
+  line-height: 1;          /* chữ gọn hơn */
 }
 .badge b{ color: var(--accent); }
-.ui-ico{ width: 18px; height: 18px; object-fit: contain; }
+
+/* KHÔNG còn dùng icon nhỏ trong badge */
+.ui-ico{ display:none; }
+
 
 .icon-btn{
   appearance: none; border: 1px solid var(--border); background: var(--card);
