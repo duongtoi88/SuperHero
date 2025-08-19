@@ -126,7 +126,7 @@ function setBodyLevel(n) {
   document.body.setAttribute("data-level", String(n));
   // đặt background (phòng khi CSS chưa tải)
   const bgIdx = LEVELS[n - 1]?.bg || 1;
-  if ($levelBg) $levelBg.style.backgroundImage = `url(assets/bg/bg${bgIdx}.jpg)`;
+  if ($levelBg) $levelBg.style.backgroundImage = `url(assets/bg/bg${bgIdx}.png)`;
 }
 
 function buildLegend() {
