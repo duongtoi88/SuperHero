@@ -141,7 +141,7 @@ body[data-level="7"] .tile.obstacle{
 /* Huy hiệu số lượt xáo trộn đặt góc trên-phải (cho nút Shuffle) */
 .img-btn .btn-badge{
   position: absolute;
-  top: -6px; right: -6px;
+  top: 6px; right: 6px;
   min-width: 22px; height: 22px;
   padding: 0 6px;
   border-radius: 999px;
@@ -160,3 +160,4 @@ body[data-level="7"] .tile.obstacle{
 /* - Nền level 1..7 khớp GDD: bg1..bg7 (mỗi level chủ đề khác nhau):contentReference[oaicite:3]{index=3} */
 /* - Vật cản xuất hiện từ level 4, đa dạng (Đá/Băng/Bụi/Cổng) — đặt data-kind tương ứng để đổi sprite:contentReference[oaicite:4]{index=4} */
 /* - Combo 4 cộng thời gian ⇒ thêm hiệu ứng .bar.boost khi addTime(5) trong JS:contentReference[oaicite:5]{index=5} */
+
