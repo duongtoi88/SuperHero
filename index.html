@@ -20,29 +20,21 @@
       <img class="logo" src="assets/ui/logo.png" alt="Nối Thú Siêu Anh Hùng">
       <h1 class="title">Nối Thú Siêu Anh Hùng</h1>
     </div>
-    <nav class="hud">
-      <div class="badge">
-        <img src="assets/ui/diem.png" alt="" class="ui-ico">
-        <span>Điểm: <b id="score">0</b></span>
-      </div>
-      <div class="badge">
-        <img src="assets/ui/combo.png" alt="" class="ui-ico">
-        <span>Combo: <b id="combo">0</b></span>
-      </div>
-      <div class="badge">
-        <img src="assets/ui/time.png" alt="" class="ui-ico">
-        <span>⏳ <b id="time">150</b>s</span>
-      </div>
-      <div class="badge">
-        <span>Level: <b id="level">1</b>/7</span>
-      </div>
-      <button id="btnSound" class="icon-btn" aria-label="Bật/Tắt âm thanh">
-        <img id="icoSound" src="assets/ui/onsound.png" alt="Âm thanh đang bật">
-      </button>
-      <button id="btnPause" class="icon-btn" aria-label="Tạm dừng">
-        <img src="assets/ui/pause.png" alt="Tạm dừng">
-      </button>
-    </nav>
+	<nav class="hud">
+	  <div class="badge">Điểm: <b id="score">0</b></div>
+	  <div class="badge">Combo: <b id="combo">0</b></div>
+	  <div class="badge">Thời gian: <b id="time">150</b>s</div>
+	  <div class="badge">Level: <b id="level">1</b>/7</div>
+
+	  <!-- các nút vẫn giữ nguyên -->
+	  <button id="btnSound" class="icon-btn" aria-label="Bật/Tắt âm thanh">
+		<img id="icoSound" src="assets/ui/onsound.png" alt="Âm thanh đang bật">
+	  </button>
+	  <button id="btnPause" class="icon-btn" aria-label="Tạm dừng">
+		<img src="assets/ui/pause.png" alt="Tạm dừng">
+	  </button>
+	</nav>
+
   </header>
 
   <!-- MAIN -->
@@ -153,13 +145,13 @@
   <script>
     // Map background theo level (bg1..bg7) — theo GDD
     const levelBgMap = [
-      'assets/bg/bg1.jpg', // L1: đồng cỏ / công viên
-      'assets/bg/bg2.jpg', // L2: rừng nhiệt đới / trang trại
-      'assets/bg/bg3.jpg', // L3: đại dương / kẹo ngọt
-      'assets/bg/bg4.jpg', // L4: thành phố
-      'assets/bg/bg5.jpg', // L5: không gian / lâu đài cổ
-      'assets/bg/bg6.jpg', // L6: sa mạc / núi lửa
-      'assets/bg/bg7.jpg', // L7: đền cổ / thần bí
+      'assets/bg/bg1.png', // L1: đồng cỏ / công viên
+      'assets/bg/bg2.png', // L2: rừng nhiệt đới / trang trại
+      'assets/bg/bg3.png', // L3: đại dương / kẹo ngọt
+      'assets/bg/bg4.png', // L4: thành phố
+      'assets/bg/bg5.png', // L5: không gian / lâu đài cổ
+      'assets/bg/bg6.png', // L6: sa mạc / núi lửa
+      'assets/bg/bg7.png', // L7: đền cổ / thần bí
     ];
     // CSS safeguard cho overlay hidden (phòng khi CSS chưa kịp tải)
     (function ensureOverlayHiddenRule(){
@@ -170,4 +162,3 @@
   </script>
 </body>
 </html>
-
