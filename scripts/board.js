@@ -204,7 +204,7 @@ window.Board = (function(){
     const n = clamp(levelIndex, 1, 7);
     document.body.setAttribute('data-level', String(n));
     if($levelBg){
-      $levelBg.style.backgroundImage = `url(assets/bg/bg${n}.jpg)`;
+      $levelBg.style.backgroundImage = `url(assets/bg/bg${n}.png)`;
     }
   }
 
@@ -218,3 +218,4 @@ window.Board = (function(){
     setLevelBg,
   };
 })();
+
