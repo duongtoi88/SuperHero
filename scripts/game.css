@@ -1,0 +1,139 @@
+/* ====================== THEME THEO LEVEL (BG, TONE) ====================== */
+/* Gắn body[data-level="n"] trong JS để đổi nền level-bg theo GDD */
+body[data-level="1"] .level-bg { background-image: url("../assets/bg/bg1.jpg"); } /* Đồng cỏ / Công viên */
+body[data-level="2"] .level-bg { background-image: url("../assets/bg/bg2.jpg"); } /* Rừng nhiệt đới / Trang trại */
+body[data-level="3"] .level-bg { background-image: url("../assets/bg/bg3.jpg"); } /* Đại dương / Kẹo ngọt */
+body[data-level="4"] .level-bg { background-image: url("../assets/bg/bg4.jpg"); } /* Thành phố */
+body[data-level="5"] .level-bg { background-image: url("../assets/bg/bg5.jpg"); } /* Không gian / Lâu đài cổ */
+body[data-level="6"] .level-bg { background-image: url("../assets/bg/bg6.jpg"); } /* Sa mạc / Núi lửa */
+body[data-level="7"] .level-bg { background-image: url("../assets/bg/bg7.jpg"); } /* Đền cổ / Thần bí */
+
+/* Phối màu nhấn mỗi level (tùy chọn) */
+body[data-level="1"] { --accent: #22d3ee; --good:#34d399; }
+body[data-level="2"] { --accent: #86efac; --good:#22c55e; }
+body[data-level="3"] { --accent: #60a5fa; --good:#34d399; }
+body[data-level="4"] { --accent: #f472b6; --good:#22d3ee; }
+body[data-level="5"] { --accent: #a78bfa; --good:#60a5fa; }
+body[data-level="6"] { --accent: #f59e0b; --good:#f97316; }
+body[data-level="7"] { --accent: #c084fc; --good:#10b981; }
+
+/* ====================== HIỂN THỊ ĐƯỜNG NỐI (SVG PATH) ====================== */
+/* Gradient & glow cho polyline trong #pathLayer (đường nối ≤2 góc rẽ) */
+.path polyline{
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(34,211,238,.45));
+  animation: path-pop .28s ease;
+}
+@keyframes path-pop{
+  from { opacity: .0; transform: scale(0.96); }
+  to   { opacity: 1;  transform: scale(1); }
+}
+
+/* ====================== TILES & STATES (OBSTACLE, HINT, MATCH) ====================== */
+/* Vật cản bắt đầu xuất hiện từ Level 4 trở đi theo GDD */
+body[data-level="4"] .tile.obstacle,
+body[data-level="5"] .tile.obstacle,
+body[data-level="6"] .tile.obstacle,
+body[data-level="7"] .tile.obstacle{
+  background: #1b2336;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+/* Nếu muốn “skin” obstacle theo art sheet trong assets/obstacles/ (Da/Bang/Cay/Xoay) */
+.tile.obstacle[data-kind="Da1"]  img{ content-visibility:auto; }
+.tile.obstacle[data-kind="Da2"]  img{ content-visibility:auto; }
+.tile.obstacle[data-kind="Da3"]  img{ content-visibility:auto; }
+.tile.obstacle[data-kind="Bang"] img{ content-visibility:auto; }
+.tile.obstacle[data-kind="Cay"]  img{ content-visibility:auto; }
+.tile.obstacle[data-kind="Xoay1"] img,
+.tile.obstacle[data-kind="Xoay2"] img{ content-visibility:auto; }
+
+/* Ô được chọn (nhấp sáng) */
+.tile.sel{
+  outline: 3px solid var(--accent);
+  filter: drop-shadow(0 0 10px color-mix(in oklab, var(--accent) 40%, transparent));
+}
+
+/* Ô đã khớp: nhỏ lại + mờ dần */
+.tile.matched{
+  animation: matched-out .22s ease forwards;
+}
+@keyframes matched-out{
+  to { opacity: .15; transform: scale(.88); }
+}
+
+/* Hover nhẹ cho tile khả dụng (desktop) */
+@media (hover:hover){
+  .tile:not(.obstacle):not(.matched):hover{
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 50%, transparent);
+  }
+}
+
+/* ====================== HUD, NÚT & FEEDBACK COMBO ====================== */
+.badge b{
+  text-shadow: 0 0 8px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* Nút có icon: rung nhẹ khi click (JS có thể thêm .clicked trong 120ms) */
+.btn.clicked{
+  animation: btn-click .12s ease;
+}
+@keyframes btn-click{
+  50% { transform: translateY(1px) scale(.98); }
+}
+
+/* Thanh thời gian “nhảy” khi được cộng thời gian (combo 4 theo GDD) */
+.bar.boost{
+  animation: time-boost .18s ease;
+}
+@keyframes time-boost{
+  30% { transform: scaleY(1.16); }
+}
+
+/* Toast/Thông báo nổi bật hơn một chút */
+.toast.show{
+  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+}
+
+/* ====================== EFFECTS & TRANSITIONS NHẸ ====================== */
+.board{
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.board.anim-hint{
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent), 0 0 24px rgba(0,0,0,.3);
+}
+
+/* ====================== RESPONSIVE TINH CHỈNH ====================== */
+@media (max-width: 980px){
+  .legend{ grid-template-columns: repeat(6, minmax(0,1fr)); }
+}
+@media (max-width: 640px){
+  .legend{ grid-template-columns: repeat(5, minmax(0,1fr)); }
+}
+/* Nút dạng ảnh toàn phần */
+.img-btn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  width: 64px;   /* kích thước khung nút, bạn chọn 64/80/100 tùy UI */
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* hoặc cover nếu muốn lấp đầy tuyệt đối */
+  display: block;
+}
+
+
+/* ====================== GHI CHÚ GDD ====================== */
+/* - Nền level 1..7 khớp GDD: bg1..bg7 (mỗi level chủ đề khác nhau):contentReference[oaicite:3]{index=3} */
+/* - Vật cản xuất hiện từ level 4, đa dạng (Đá/Băng/Bụi/Cổng) — đặt data-kind tương ứng để đổi sprite:contentReference[oaicite:4]{index=4} */
+/* - Combo 4 cộng thời gian ⇒ thêm hiệu ứng .bar.boost khi addTime(5) trong JS:contentReference[oaicite:5]{index=5} */
