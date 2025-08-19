@@ -49,21 +49,33 @@
   <main class="layout">
     <!-- PANEL TRÁI -->
     <aside class="side">
-      <section>
-        <h2>Điều khiển</h2>
-        <div class="controls">
-          <button id="btnHint" class="btn">
-            <img src="assets/ui/hint.png" alt="" class="ui-ico">
-          </button>
-          <button id="btnShuffle" class="btn warn">
-            <img src="assets/ui/shuffle.png" alt="" class="ui-ico">
-             (<span id="shuffles">3</span>)
-          </button>
-          <button id="btnRestart" class="btn bad">
-            <img src="assets/ui/play.png" alt="" class="ui-ico">
-          </button>
-        </div>
-      </section>
+	<section>
+	  <h2>Điều khiển</h2>
+	  <div class="controls">
+
+		<!-- Hint ảnh toàn phần -->
+		<button id="btnHint" class="img-btn" aria-label="Gợi ý">
+		  <img src="assets/ui/Hint.png" alt="">
+		  <span class="sr-only">Gợi ý</span>
+		</button>
+
+		<!-- Shuffle ảnh toàn phần + huy hiệu số lượt -->
+		<button id="btnShuffle" class="img-btn" aria-label="Xáo trộn">
+		  <img src="assets/ui/Shuffle.png" alt="">
+		  <span id="shuffles" class="btn-badge">3</span>
+		  <span class="sr-only">Xáo trộn</span>
+		</button>
+
+		<!-- Replay/Restart ảnh toàn phần -->
+		<button id="btnRestart" class="img-btn" aria-label="Chơi lại">
+		  <!-- dùng Play.png hoặc Exit.png tùy bộ UI của bạn -->
+		  <img src="assets/ui/play.png" alt="">
+		  <span class="sr-only">Chơi lại</span>
+		</button>
+
+	  </div>
+	</section>
+
 
       <section>
         <h2>Nền tảng</h2>
