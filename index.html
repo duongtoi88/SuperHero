@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nối Thú Siêu Anh Hùng</title>
+
+  <!-- Styles tách module -->
+  <link rel="preload" as="image" href="assets/ui/Logo.png">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/game.css">
+
+  <!-- Favicon (tuỳ chọn, dùng Logo) -->
+  <link rel="icon" type="image/png" href="assets/ui/Logo.png" />
+</head>
+<body>
+  <!-- HEADER / HUD -->
+  <header class="topbar">
+    <div class="brand">
+      <img class="logo" src="assets/ui/Logo.png" alt="Nối Thú Siêu Anh Hùng">
+      <h1 class="title">Nối Thú Siêu Anh Hùng</h1>
+    </div>
+    <nav class="hud">
+      <div class="badge">
+        <img src="assets/ui/diem.png" alt="" class="ui-ico">
+        <span>Điểm: <b id="score">0</b></span>
+      </div>
+      <div class="badge">
+        <img src="assets/ui/combo.png" alt="" class="ui-ico">
+        <span>Combo: <b id="combo">0</b></span>
+      </div>
+      <div class="badge">
+        <img src="assets/ui/time.png" alt="" class="ui-ico">
+        <span>⏳ <b id="time">150</b>s</span>
+      </div>
+      <div class="badge">
+        <span>Level: <b id="level">1</b>/7</span>
+      </div>
+      <button id="btnSound" class="icon-btn" aria-label="Bật/Tắt âm thanh">
+        <img id="icoSound" src="assets/ui/onsound.png" alt="Âm thanh đang bật">
+      </button>
+      <button id="btnPause" class="icon-btn" aria-label="Tạm dừng">
+        <img src="assets/ui/pause.png" alt="Tạm dừng">
+      </button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="layout">
+    <!-- PANEL TRÁI -->
+    <aside class="side">
+      <section>
+        <h2>Điều khiển</h2>
+        <div class="controls">
+          <button id="btnHint" class="btn">
+            <img src="assets/ui/Hint.png" alt="" class="ui-ico"> Gợi ý
+          </button>
+          <button id="btnShuffle" class="btn warn">
+            <img src="assets/ui/Shuffle.png" alt="" class="ui-ico">
+            Xáo trộn (<span id="shuffles">3</span>)
+          </button>
+          <button id="btnRestart" class="btn bad">
+            <img src="assets/ui/play.png" alt="" class="ui-ico"> Chơi lại
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Nền tảng</h2>
+        <div id="legend" class="legend"></div>
+      </section>
+
+      <section>
+        <h2>Tiến độ</h2>
+        <div class="progress"><div id="timebar" class="bar"></div></div>
+      </section>
+
+      <section>
+        <h2>Cài đặt</h2>
+        <label class="toggle">
+          <input id="optAutoShuffle" type="checkbox" checked>
+          <span>Tự xáo trộn khi bí</span>
+        </label>
+        <label class="toggle">
+          <input id="optFastTimer" type="checkbox">
+          <span>Timer nhanh (debug)</span>
+        </label>
+      </section>
+
+      <div id="srLive" class="sr-only" aria-live="polite"></div>
+    </aside>
+
+    <!-- KHU VỰC BÀN CHƠI -->
+    <section class="playfield">
+      <!-- nền level (bg1..bg7) -->
+      <div id="levelBg" class="level-bg" aria-hidden="true"></div>
+
+      <!-- board + svg path overlay (đường nối) -->
+      <div class="board" id="board" style="--cols: 8" role="grid" aria-label="Bàn chơi nối thú">
+        <svg class="path" id="pathLayer" viewBox="0 0 100 100" aria-hidden="true"></svg>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (tuỳ chọn) -->
+  <footer class="footer">
+    <small>© 2025 Nối Thú Siêu Anh Hùng</small>
+  </footer>
+
+  <!-- POPUP TẠM DỪNG -->
+  <div id="overlay" class="overlay" hidden>
+    <div class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="pausedTitle">
+      <h3 id="pausedTitle">Tạm dừng</h3>
+      <p>Nhấn <kbd>P</kbd> hoặc “Tiếp tục”.</p>
+      <div class="row">
+        <button id="btnResume" class="btn primary">Tiếp tục</button>
+        <button id="btnRestart2" class="btn bad">Chơi lại</button>
+      </div>
+      <p class="hint">Phím tắt: <kbd>P</kbd> pause, <kbd>H</kbd> hint, <kbd>R</kbd> restart</p>
+    </div>
+  </div>
+
+  <!-- PRELOAD ÂM THANH (đúng tên trong GDD) -->
+  <audio id="sfxClick"   src="assets/sfx/Click.mp3"    preload="auto"></audio>
+  <audio id="sfxHint"    src="assets/sfx/Hint.mp3"     preload="auto"></audio>
+  <audio id="sfxMatch"   src="assets/sfx/Match.mp3"    preload="auto"></audio>
+  <audio id="sfxMismatch"src="assets/sfx/Mismatch.mp3" preload="auto"></audio>
+  <audio id="sfxShuffle" src="assets/sfx/Shuffle.mp3"  preload="auto"></audio>
+  <audio id="sfxWin"     src="assets/sfx/Win.mp3"      preload="auto"></audio>
+  <audio id="sfxLose"    src="assets/sfx/Lose.mp3"     preload="auto"></audio>
+
+  <!-- SCRIPTS tách module -->
+  <script src="scripts/utils.js" defer></script>
+  <script src="scripts/state.js" defer></script>
+  <script src="scripts/timer.js" defer></script>
+  <script src="scripts/connect.js" defer></script>
+  <script src="scripts/board.js" defer></script>
+  <script src="scripts/game.js" defer></script>
+
+  <!-- Cấu hình nền level + fix overlay[hidden] -->
+  <script>
+    // Map background theo level (bg1..bg7) — theo GDD
+    const levelBgMap = [
+      'assets/bg/bg1.jpg', // L1: đồng cỏ / công viên
+      'assets/bg/bg2.jpg', // L2: rừng nhiệt đới / trang trại
+      'assets/bg/bg3.jpg', // L3: đại dương / kẹo ngọt
+      'assets/bg/bg4.jpg', // L4: thành phố
+      'assets/bg/bg5.jpg', // L5: không gian / lâu đài cổ
+      'assets/bg/bg6.jpg', // L6: sa mạc / núi lửa
+      'assets/bg/bg7.jpg', // L7: đền cổ / thần bí
+    ];
+    // CSS safeguard cho overlay hidden (phòng khi CSS chưa kịp tải)
+    (function ensureOverlayHiddenRule(){
+      const st = document.createElement('style');
+      st.textContent = '.overlay[hidden]{display:none!important}';
+      document.head.appendChild(st);
+    })();
+  </script>
+</body>
+</html>

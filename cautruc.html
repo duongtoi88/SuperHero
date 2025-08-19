@@ -1,0 +1,42 @@
+Hero1508/
+├─ index.html
+├─ styles/
+│  ├─ base.css                  # reset, biến màu, layout
+│  └─ game.css                  # style UI game, overlay, path SVG
+├─ scripts/
+│  ├─ game.js                   # khởi động game, vòng đời level, event UI
+│  ├─ board.js                  # tạo/vẽ bàn, gravity, redraw tile
+│  ├─ connect.js                # thuật toán nối ≤ 2 góc rẽ, drawPath
+│  ├─ state.js                  # state, localStorage (best score, last level)
+│  ├─ timer.js                  # đếm thời gian, thanh timebar
+│  └─ utils.js                  # shuffle, randInt, toast, speak (aria-live)
+├─ assets/
+│  ├─ icons/
+│  │  ├─ icon_1.png
+│  │  ├─ ... icon_15.png
+│  │  └─ da1
+│  │  └─ da2
+│  │  └─ da3
+│  │  └─ bang
+│  │  └─ cay
+│  │  └─ xoay1
+│  │  └─ xoay2
+│  ├─ bg/                       # (tuỳ chọn) hình nền theo level
+│  │  ├─ bg1.jpg
+│  │  └─ ...
+│  └─ audio/                    # (tuỳ chọn) nhạc & sfx
+│     ├─ click.mp3
+│     ├─ match.mp3
+│     ├─ mismatch.mp3
+│     ├─ hint.mp3
+│     ├─ shuffle.mp3
+│     ├─ lose.mp3
+│     └─ win.mp3
+├─ meta/
+│  ├─ manifest.webmanifest      # (tuỳ chọn) PWA (tên app, icon, themeColor…)
+│  └─ icons/                    # (tuỳ chọn) icon PWA/shortcut nhiều kích thước
+│     ├─ 192.png
+│     └─ 512.png
+├─ .nojekyll                    # (khuyến nghị) file rỗng
+├─ README.md
+└─ LICENSE                      # (tuỳ chọn)
