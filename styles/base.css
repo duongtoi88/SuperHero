@@ -1,0 +1,255 @@
+/* ============ CSS RESET NHẸ ============ */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Helvetica, Arial, sans-serif; }
+
+/* ============ BIẾN CƠ BẢN ============ */
+/* Bàn 10x8, path SVG đè lên tiles; màu & z-index cơ bản */
+:root{
+  --cell: 64px;             /* kích thước 1 ô chơi */
+  --gap: 8px;               /* khoảng cách giữa ô */
+  --radius: 14px;           /* bo góc ô, card */
+  --pad: 12px;              /* padding board */
+
+  --bg-body: radial-gradient(1200px 800px at 20% 10%, #1e293b 0%, #0b1222 60%, #030712 100%);
+  --panel: #111827;         /* panel/aside */
+  --card: #1f2937;          /* khối nhỏ, nút */
+  --ink: #e5e7eb;           /* chữ */
+  --muted: #9ca3af;         /* chữ phụ */
+  --border: #2b3345;        /* viền */
+  --accent: #22d3ee;        /* điểm nhấn (cyan) */
+  --good: #34d399;          /* xanh thưởng/ok */
+  --warn: #f59e0b;          /* cam cảnh báo */
+  --bad:  #fb7185;          /* hồng lỗi */
+
+  --z-hud: 2;
+  --z-board: 3;
+  --z-path: 5;              /* SVG đường nối nằm trên tile */
+  --z-overlay: 20;          /* popup pause */
+
+  /* tốc độ chuyển động khuyến nghị */
+  --dur-fast: .18s;
+  --dur: .25s;
+}
+
+/* ============ NỀN & KHUNG CHUNG ============ */
+body{
+  background: var(--bg-body);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+/* Top bar (logo + HUD) */
+.topbar{
+  position: sticky; top: 0; z-index: var(--z-hud);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+}
+.brand{ display: flex; align-items: center; gap: 10px; }
+.brand .logo{ width: 36px; height: 36px; object-fit: contain; }
+.title{ margin: 0; font-size: 20px; font-weight: 700; letter-spacing: .2px; }
+
+.hud{ display: flex; align-items: center; gap: 12px; }
+.badge{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 10px; min-height: 32px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+  font-size: 14px;
+}
+.badge b{ color: var(--accent); }
+.ui-ico{ width: 18px; height: 18px; object-fit: contain; }
+
+.icon-btn{
+  appearance: none; border: 1px solid var(--border); background: var(--card);
+  border-radius: 12px; padding: 6px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+.icon-btn:hover{ background: #243044; }
+.icon-btn:active{ transform: translateY(1px); }
+.icon-btn img{ width: 20px; height: 20px; }
+
+/* ============ BỐ CỤC TRANG ============ */
+.layout{
+  display: grid; gap: 16px; max-width: 1200px;
+  margin: 18px auto; padding: 0 16px 32px;
+  grid-template-columns: 320px 1fr;
+}
+@media (max-width: 980px){
+  .layout{ grid-template-columns: 1fr; }
+}
+
+/* ============ PANEL TRÁI (SIDE) ============ */
+.side{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.side h2{ margin: 0 0 6px; font-size: 16px; color: #c7d2fe; }
+.controls{
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+}
+
+/* Buttons */
+.btn{
+  appearance: none; border: 1px solid var(--border);
+  background: var(--card); color: var(--ink);
+  padding: 10px 12px; border-radius: 12px; cursor: pointer;
+  transition: background var(--dur-fast) ease, transform var(--dur-fast) ease;
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+}
+.btn:hover{ background: #243044; }
+.btn:active{ transform: translateY(1px); }
+
+.btn.primary{
+  background: linear-gradient(180deg, #0ea5e9, #0284c7);
+  border-color: #075985;
+}
+.btn.warn{
+  background: linear-gradient(180deg, #f59e0b, #d97706);
+  border-color: #92400e;
+}
+.btn.bad{
+  background: linear-gradient(180deg, #fb7185, #e11d48);
+  border-color: #9f1239;
+}
+button:disabled{ opacity: .55; filter: grayscale(.3); cursor: not-allowed; }
+
+/* Legend các icon thú & obstacle (theo GDD: 15 loài, obstacle từ L4) */
+.legend{
+  display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 6px;
+}
+.legend .tile{ font-size: 0; } /* chỉ hiển thị ảnh */
+
+/* Toggle */
+.toggle{ display: flex; align-items: center; gap: 8px; font-size: 14px; opacity: .95; }
+.toggle input{ transform: translateY(1px); }
+
+/* ============ PLAYFIELD (NỀN + BOARD) ============ */
+.playfield{ position: relative; z-index: var(--z-board); }
+.level-bg{
+  position: absolute; inset: 0; z-index: 0; opacity: .25; pointer-events: none;
+  background-size: cover; background-position: center;
+  /* sẽ set ảnh động theo level: assets/bg/bg1.jpg..bg7.jpg (GDD) */
+}
+
+/* Bàn chơi 10x8, để khoảng pad cho tính toán path */
+.board{
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 8), var(--cell));
+  grid-auto-rows: var(--cell);
+  gap: var(--gap);
+  padding: var(--pad);
+  border-radius: calc(var(--radius) + 4px);
+  background: rgba(17,24,39,.6);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+}
+
+/* Ô chơi (tile), hiển thị icon thú/obstacle từ assets theo GDD */
+.tile{
+  width: var(--cell); height: var(--cell);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius);
+  background: #0b1020; border: 1px solid var(--border);
+  box-shadow: inset 0 -4px 0 rgba(255,255,255,.04);
+  overflow: hidden;
+}
+.tile img{
+  width: 100%; height: 100%; object-fit: contain;
+  user-select: none; pointer-events: none; -webkit-user-drag: none;
+}
+.tile.obstacle{ background: #1b2336; } /* đá/băng/bụi theo GDD từ Level 4 trở đi */
+
+/* Trạng thái chọn & matched */
+.tile.sel{
+  outline: 3px solid var(--accent);
+  filter: drop-shadow(0 0 8px rgba(34,211,238,.35));
+}
+.tile.matched{
+  opacity: .2; transform: scale(.9);
+  transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+
+/* SVG đường nối (nằm trong .board, đè lên .tile) – phù hợp luật ≤2 góc rẽ trong GDD */
+.path{
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: var(--z-path);
+}
+
+/* Thanh tiến độ thời gian (quy đổi điểm khi clear level) */
+.progress{
+  height: 8px;
+  background: #0b1020; border: 1px solid var(--border);
+  border-radius: 999px; overflow: hidden;
+}
+.bar{
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--good), var(--accent));
+  transition: width var(--dur) linear;
+}
+
+/* Thông báo nhỏ */
+.toast{
+  position: fixed; left: 50%; top: 16px; transform: translateX(-50%);
+  background: #111827; border: 1px solid var(--border);
+  padding: 8px 12px; border-radius: 999px; color: var(--ink);
+  opacity: 0; transition: opacity var(--dur), transform var(--dur);
+}
+.toast.show{ opacity: 1; transform: translateX(-50%) translateY(6px); }
+
+/* ============ OVERLAY PAUSE ============ */
+.overlay{
+  position: fixed; inset: 0; z-index: var(--z-overlay);
+  background: rgba(0,0,0,.55);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(3px);
+}
+/* rất quan trọng để ẩn bằng thuộc tính [hidden] từ JS */
+.overlay[hidden]{ display: none !important; }
+
+.overlay-card{
+  background: #0b1020; border: 1px solid var(--border);
+  border-radius: 16px; padding: 18px;
+  min-width: 280px; max-width: min(520px, 90vw);
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+.overlay-card h3{ margin: .2rem 0 .5rem; font-size: 18px; }
+.overlay-card .row{ display: flex; gap: 10px; margin: 8px 0 6px; }
+.overlay-card .hint{ color: var(--muted); font-size: 12px; }
+
+/* ============ TRỢ NĂNG & FOCUS ============ */
+.sr-only{
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+:focus-visible{
+  outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 12px;
+}
+
+/* ============ FOOTER ============ */
+.footer{
+  text-align: center; color: var(--muted);
+  padding: 12px 0 24px;
+  font-size: 12px;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 640px){
+  :root{
+    --cell: 56px;
+  }
+  .ui-ico{ width: 16px; height: 16px; }
+  .icon-btn img{ width: 18px; height: 18px; }
+}
+
+/* ============ GHI CHÚ LIÊN QUAN GDD ============ */
+/* - Bàn 10x8, luật nối tối đa 2 góc rẽ, xáo trộn & timer giảm theo level:contentReference[oaicite:2]{index=2} */
+/* - Có vật cản từ Level 4 (đá/băng/bụi/teleport), nên .tile.obstacle riêng:contentReference[oaicite:3]{index=3} */
+/* - Quy đổi thời gian còn lại ra điểm khi clear level, nên có .progress/.bar:contentReference[oaicite:4]{index=4} */
