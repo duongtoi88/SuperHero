@@ -1,12 +1,12 @@
 /* ====================== THEME THEO LEVEL (BG, TONE) ====================== */
 /* Gắn body[data-level="n"] trong JS để đổi nền level-bg theo GDD */
-body[data-level="1"] .level-bg { background-image: url("../assets/bg/bg1.jpg"); } /* Đồng cỏ / Công viên */
-body[data-level="2"] .level-bg { background-image: url("../assets/bg/bg2.jpg"); } /* Rừng nhiệt đới / Trang trại */
-body[data-level="3"] .level-bg { background-image: url("../assets/bg/bg3.jpg"); } /* Đại dương / Kẹo ngọt */
-body[data-level="4"] .level-bg { background-image: url("../assets/bg/bg4.jpg"); } /* Thành phố */
-body[data-level="5"] .level-bg { background-image: url("../assets/bg/bg5.jpg"); } /* Không gian / Lâu đài cổ */
-body[data-level="6"] .level-bg { background-image: url("../assets/bg/bg6.jpg"); } /* Sa mạc / Núi lửa */
-body[data-level="7"] .level-bg { background-image: url("../assets/bg/bg7.jpg"); } /* Đền cổ / Thần bí */
+body[data-level="1"] .level-bg { background-image: url("../assets/bg/bg1.png"); } /* Đồng cỏ / Công viên */
+body[data-level="2"] .level-bg { background-image: url("../assets/bg/bg2.png"); } /* Rừng nhiệt đới / Trang trại */
+body[data-level="3"] .level-bg { background-image: url("../assets/bg/bg3.png"); } /* Đại dương / Kẹo ngọt */
+body[data-level="4"] .level-bg { background-image: url("../assets/bg/bg4.png"); } /* Thành phố */
+body[data-level="5"] .level-bg { background-image: url("../assets/bg/bg5.png"); } /* Không gian / Lâu đài cổ */
+body[data-level="6"] .level-bg { background-image: url("../assets/bg/bg6.png"); } /* Sa mạc / Núi lửa */
+body[data-level="7"] .level-bg { background-image: url("../assets/bg/bg7.png"); } /* Đền cổ / Thần bí */
 
 /* Phối màu nhấn mỗi level (tùy chọn) */
 body[data-level="1"] { --accent: #22d3ee; --good:#34d399; }
@@ -160,4 +160,5 @@ body[data-level="7"] .tile.obstacle{
 /* - Nền level 1..7 khớp GDD: bg1..bg7 (mỗi level chủ đề khác nhau):contentReference[oaicite:3]{index=3} */
 /* - Vật cản xuất hiện từ level 4, đa dạng (Đá/Băng/Bụi/Cổng) — đặt data-kind tương ứng để đổi sprite:contentReference[oaicite:4]{index=4} */
 /* - Combo 4 cộng thời gian ⇒ thêm hiệu ứng .bar.boost khi addTime(5) trong JS:contentReference[oaicite:5]{index=5} */
+
 
