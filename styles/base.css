@@ -143,7 +143,7 @@ button:disabled{ opacity: .55; filter: grayscale(.3); cursor: not-allowed; }
 /* ============ PLAYFIELD (NỀN + BOARD) ============ */
 .playfield{ position: relative; z-index: var(--z-board); }
 .level-bg{
-  position: absolute; inset: 0; z-index: 0; opacity: .25; pointer-events: none;
+  position: absolute; inset: 0; z-index: 0; opacity: .75; pointer-events: none;
   background-size: cover; background-position: center;
   /* sẽ set ảnh động theo level: assets/bg/bg1.jpg..bg7.jpg (GDD) */
 }
@@ -257,6 +257,19 @@ button:disabled{ opacity: .55; filter: grayscale(.3); cursor: not-allowed; }
   }
   .ui-ico{ width: 16px; height: 16px; }
   .icon-btn img{ width: 18px; height: 18px; }
+}
+/* Căn giữa board trong vùng chơi */
+.playfield{
+  position: relative;
+  display: flex;               /* dùng flex cho đơn giản */
+  justify-content: center;     /* căn ngang vào giữa */
+  align-items: flex-start;     /* hoặc center nếu muốn giữa theo chiều dọc */
+  min-height: 420px;           /* tuỳ chọn: đảm bảo có không gian cho nền */
+}
+
+/* Phòng khi có margin mặc định đâu đó: ép board vào giữa */
+.board{
+  margin: 0 auto;
 }
 
 /* ============ GHI CHÚ LIÊN QUAN GDD ============ */
